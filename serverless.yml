@@ -1,0 +1,29 @@
+service: aws-node-http-api-project
+frameworkVersion: '3'
+
+plugins:
+  - serverless-offline  # plugin serverless-offline
+
+provider:
+  name: aws
+  runtime: nodejs18.x
+  region: us-east-1
+
+functions:
+  getEndpoint:
+    handler: dist/DataCard.handler
+    events:
+      - httpApi:
+          path: /card  # Ruta del endpoint GET
+          method: get  # Método HTTP GET
+
+  postEndpoint:
+    handler: dist/CardToken.handler
+    events:
+      - httpApi:
+          path: /tokens  # Ruta del endpoint POST
+          method: post  # Método HTTP POST
+
+custom:
+  serverless-offline:
+    httpPort: 3000  # Puerto en el que se ejecutará el servidor local (opcional, por defecto es 3000)
